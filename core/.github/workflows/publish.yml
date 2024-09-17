@@ -25,6 +25,8 @@ jobs:
         env:
           modrinth_token: ${{ secrets.MODRINTH_TOKEN }}
           github_token: ${{ secrets.GH_API_KEY }}
+          USERNAME: ${{ secrets.GH_USERNAME }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Capture build artifacts
         uses: actions/upload-artifact@v4
         with:

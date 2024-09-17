@@ -107,6 +107,7 @@ assemble {
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
+			artifactId = 'advancedchatcore'  // Set artifact ID in lowercase
 			// add all the jars that should be included when publishing to maven
 			artifact(remapJar) {
 				builtBy remapJar
@@ -119,7 +120,13 @@ publishing {
 
 	// select the repositories you want to publish to
 	repositories {
-		// uncomment to publish to the local maven
-		// mavenLocal()
+		maven {
+			name = "GitHubPackages"
+			url = uri("https://maven.pkg.github.com/Arematics/AdvancedChatCore")
+			credentials {
+				username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+				password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+			}
+		}
 	}
 }

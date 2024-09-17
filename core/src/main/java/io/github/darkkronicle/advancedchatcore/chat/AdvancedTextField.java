@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
+import static net.minecraft.client.gui.screen.Screen.hasControlDown;
+
 public class AdvancedTextField extends TextFieldWidget {
 
     private final static int MAX_HISTORY = 50;
@@ -93,7 +95,7 @@ public class AdvancedTextField extends TextFieldWidget {
 
     public static boolean isUndo(int code) {
         // Undo (Ctrl + Z)
-        return code == KeyCodes.KEY_Z && Screen.hasControlDown() && !Screen.hasAltDown();
+        return code == KeyCodes.KEY_Z && hasControlDown() && !Screen.hasAltDown();
     }
 
     /** Triggers undo for the text box */
@@ -365,5 +367,16 @@ public class AdvancedTextField extends TextFieldWidget {
     @Override
     public void appendClickableNarrations(NarrationMessageBuilder builder) {
         // Crashes here because Text is null
+    }
+
+    @Override
+    public void eraseWords(int wordOffset) {
+        if (!this.getText().isEmpty()) {
+            if (this.selectionEnd != this.selectionStart) {
+                this.setText("");
+            } else {
+                this.eraseCharacters(this.getWordSkipPosition(wordOffset) - this.selectionStart);
+            }
+        }
     }
 }
