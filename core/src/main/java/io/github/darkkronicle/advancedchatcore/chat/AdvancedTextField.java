@@ -249,18 +249,17 @@ public class AdvancedTextField extends TextFieldWidget {
             x1 = x + this.width;
         }
         Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBuffer();
         RenderSystem.setShader(GameRenderer::getPositionProgram);
         RenderSystem.setShaderColor(0.0f, 0.0f, 1.0f, 1.0f);
 //        RenderSystem.disableTexture();
         RenderSystem.enableColorLogicOp();
         RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
-        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
-        bufferBuilder.vertex(x1, y2, 0.0).next();
-        bufferBuilder.vertex(x2, y2, 0.0).next();
-        bufferBuilder.vertex(x2, y1, 0.0).next();
-        bufferBuilder.vertex(x1, y1, 0.0).next();
-        tessellator.draw();
+        BufferBuilder builder = tessellator.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
+        builder.vertex(x1, y2, 0.0f)
+                .vertex(x2, y2, 0.0f)
+                .vertex(x2, y1, 0.0f)
+                .vertex(x1, y1, 0.0f);
+        BufferRenderer.drawWithGlobalProgram(builder.end());
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.disableColorLogicOp();
 //        RenderSystem.enableTexture();
@@ -328,7 +327,7 @@ public class AdvancedTextField extends TextFieldWidget {
         this.lastSaved = text;
         this.history.add(text);
         while (this.history.size() > MAX_HISTORY) {
-            this.history.remove(0);
+            this.history.removeFirst();
         }
     }
 
@@ -343,7 +342,7 @@ public class AdvancedTextField extends TextFieldWidget {
             return;
         }
         while (history.size() > index) {
-            history.remove(history.size() - 1);
+            history.removeLast();
         }
     }
 
