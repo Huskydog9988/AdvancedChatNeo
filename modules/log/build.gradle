@@ -16,7 +16,7 @@ java {
 sourceCompatibility = JavaVersion.VERSION_21
 targetCompatibility = JavaVersion.VERSION_21
 
-archivesBaseName = project.archives_base_name
+archivesBaseName = "${project.archives_base_name}-${project.name}"
 version = "${project.minecraft_version}-${project.mod_version}"
 group = project.maven_group
 
@@ -73,6 +73,17 @@ java {
 jar {
 	from "LICENSE.txt"
 }
+
+tasks {
+	remapJar {
+	}
+}
+
+task copyJar(type: Copy) {
+	from remapJar
+	into '../../dist'
+}
+build.dependsOn copyJar
 
 // // configure the maven publication
 // publishing {

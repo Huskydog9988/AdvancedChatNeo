@@ -15,7 +15,7 @@ java {
 sourceCompatibility = JavaVersion.VERSION_21
 targetCompatibility = JavaVersion.VERSION_21
 
-archivesBaseName = project.archives_base_name
+archivesBaseName = "${project.archives_base_name}-${project.name}"
 version = "${project.minecraft_version}-${project.mod_version}"
 group = project.maven_group
 
@@ -79,21 +79,33 @@ jar {
 	from "LICENSE.txt"
 }
 
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			// add all the jars that should be included when publishing to maven
-			artifact(remapJar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
-		}
-	}
-
-	// select the repositories you want to publish to
-	repositories {
+tasks {
+	remapJar {
+		// destinationDirectory = getProjectDir().
 	}
 }
+
+task copyJar(type: Copy) {
+	from remapJar
+	into '../../dist'
+}
+build.dependsOn copyJar
+
+// // configure the maven publication
+// publishing {
+// 	publications {
+// 		mavenJava(MavenPublication) {
+// 			// add all the jars that should be included when publishing to maven
+// 			artifact(remapJar) {
+// 				builtBy remapJar
+// 			}
+// 			artifact(sourcesJar) {
+// 				builtBy remapSourcesJar
+// 			}
+// 		}
+// 	}
+//
+// 	// select the repositories you want to publish to
+// 	repositories {
+// 	}
+// }
