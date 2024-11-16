@@ -4,22 +4,17 @@
   "version": "${version}",
   "name": "AdvancedChatFilters",
   "description": "Filters for AdvancedChat",
-  "authors": [
-    "DarkKronicle",
-    "EnricoMessall"
-  ],
+  "authors": ["DarkKronicle", "EnricoMessall", "Huskydog9988"],
   "contact": {
-    "homepage": "https://arematics.com",
-    "sources": "https://github.com/Arematics/AdvancedChatFilters",
-    "issues": "https://github.com/Arematics/AdvancedChatFilters/issues"
+    "homepage": "https://github.com/Huskydog9988/adv-chat-neo",
+    "sources": "https://github.com/Huskydog9988/adv-chat-neo",
+    "issues": "https://github.com/Huskydog9988/adv-chat-neo/issues"
   },
   "license": "MPL-v2",
   "icon": "assets/advancedchatfilters/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "io.github.darkkronicle.advancedchatfilters.AdvancedChatFilters"
-    ]
+    "client": ["io.github.darkkronicle.advancedchatfilters.AdvancedChatFilters"]
   },
   "depends": {
     "fabricloader": ">=0.15.11",

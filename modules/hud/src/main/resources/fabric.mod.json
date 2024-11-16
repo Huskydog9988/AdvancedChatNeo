@@ -4,26 +4,19 @@
   "version": "${version}",
   "name": "AdvancedChatHUD",
   "description": "A chat HUD overhaul with chat tabs",
-  "authors": [
-    "DarkKronicle",
-    "EnricoMessall"
-  ],
+  "authors": ["DarkKronicle", "EnricoMessall", "Huskydog9988"],
   "contact": {
-    "homepage": "https://arematics.com",
-    "sources": "https://github.com/Arematics/AdvancedChatHUD",
-    "issues": "https://github.com/Arematics/AdvancedChatHUD/issues"
+    "homepage": "https://github.com/Huskydog9988/adv-chat-neo",
+    "sources": "https://github.com/Huskydog9988/adv-chat-neo",
+    "issues": "https://github.com/Huskydog9988/adv-chat-neo/issues"
   },
   "license": "MPL-v2",
   "icon": "assets/advancedchathud/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "io.github.darkkronicle.advancedchathud.AdvancedChatHud"
-    ]
+    "client": ["io.github.darkkronicle.advancedchathud.AdvancedChatHud"]
   },
-  "mixins": [
-    "advancedchathud.mixins.json"
-  ],
+  "mixins": ["advancedchathud.mixins.json"],
   "depends": {
     "fabricloader": ">=0.15.11",
     "fabric": "*",
