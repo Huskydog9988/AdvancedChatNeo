@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "package": "io.github.darkkronicle.advancedchatcore.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MixinClientPlayerEntity"
+  ],
+  "client": [
+    "MixinChatHud",
+    "MixinChatHudInvoker",
+    "MixinChatScreen",
+    "MixinKeyboard",
+    "MixinMinecraftClient",
+    "MixinSleepingChatScreen",
+    "MixinMessageIndicator"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
