@@ -1,0 +1,26 @@
+pluginManagement {
+	repositories {
+		maven {
+			name = 'Fabric'
+			url = 'https://maven.fabricmc.net/'
+		}
+		gradlePluginPortal()
+		mavenCentral()
+	}
+}
+
+
+rootProject.name = 'AdvancedChatNeo'
+include 'core'
+
+def modulesDir = file('modules')
+if (modulesDir.exists() && modulesDir.isDirectory()) {
+	modulesDir.eachFile { dir ->
+		if (dir.isDirectory() && file("${dir}/build.gradle").exists()) {
+			include(":${dir.name}")
+			project(":${dir.name}").projectDir = dir
+		}
+	}
+} else {
+	println "'modules' directory does not exist"
+}

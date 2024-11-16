@@ -1,2 +1,5 @@
 temp/
 script.sh
+.gradle/
+gradle/
+.idea/
