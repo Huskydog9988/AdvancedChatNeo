@@ -11,16 +11,19 @@ pluginManagement {
 
 
 rootProject.name = 'AdvancedChatNeo'
-include 'core'
+include 'core', 'box'
 
-def modulesDir = file('modules')
-if (modulesDir.exists() && modulesDir.isDirectory()) {
-	modulesDir.eachFile { dir ->
-		if (dir.isDirectory() && file("${dir}/build.gradle").exists()) {
-			include(":${dir.name}")
-			project(":${dir.name}").projectDir = dir
-		}
-	}
-} else {
-	println "'modules' directory does not exist"
-}
+// // Set the project directory for :box if it's not in the default location.
+// project(':box').projectDir = file('modules/box')
+
+// def modulesDir = file('modules')
+// if (modulesDir.exists() && modulesDir.isDirectory()) {
+// 	modulesDir.eachFile { dir ->
+// 		if (dir.isDirectory() && file("${dir}/build.gradle").exists()) {
+// 			include(":${dir.name}")
+// 			project(":${dir.name}").projectDir = dir
+// 		}
+// 	}
+// } else {
+// 	println "'modules' directory does not exist"
+// }

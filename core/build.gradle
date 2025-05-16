@@ -1,42 +1,20 @@
 plugins {
 	id 'fabric-loom' version '1.7.2'
-	id 'maven-publish'
 	id "io.freefair.lombok" version "8.10"
 }
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
+base {
+	archivesName = project.archives_base_name
 }
-
-apply from: 'https://gist.githubusercontent.com/EnricoMessall/fb5de26a0ac26840060fd1ef45c32a5f/raw/cba2886a0fc2c95b24fc093684b4e6bfeafbd5ba/publish.gradle'
-
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = JavaVersion.VERSION_21
-
-archivesBaseName = "${project.archives_base_name}-${project.name}"
 version = "${project.minecraft_version}-${project.mod_version}"
 group = project.maven_group
-
-Properties additionalProperties = new Properties()
-if (file("extra.properties").exists()) {
-	additionalProperties.load(file("extra.properties").newReader())
-}
-
-repositories {
-	mavenCentral()
-	maven { url 'https://masa.dy.fi/maven' }
-	maven { url 'https://maven.terraformersmc.com/releases/' }
-	maven { url 'https://jitpack.io' }
-	maven { url 'https://maven.wispforest.io' }
-}
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
 	modImplementation "fi.dy.masa.malilib:malilib-fabric-1.21:${project.malilib_version}"
 	modCompileOnly "com.terraformersmc:modmenu:${project.modmenu_version}"
 
@@ -71,29 +49,11 @@ processResources {
 	}
 }
 
-tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
-	it.options.release = 21
-}
-
-//task sourcesJar(type: Jar, dependsOn: classes) {
-//	classifier = "sources"
-//	from sourceSets.main.allSource
-//}
-
-tasks.register('sourcesJar', Jar) {
-	dependsOn classes
-	archiveClassifier.set('sources')
-	from sourceSets.main.allSource
-}
-
-
 jar {
 	from "LICENSE.txt"
 }
 
 tasks.register('downloadExtra') {
-
 	def f = new File(project.projectDir.toString() + '/src/main/resources/swear_words.csv')
 	if (!f.exists()) {
 		new URL('https://raw.githubusercontent.com/surge-ai/profanity/main/profanity_en.csv').withInputStream{ i -> f.withOutputStream{ it << i }}
@@ -101,43 +61,25 @@ tasks.register('downloadExtra') {
 }
 build.dependsOn "downloadExtra"
 
+java {
+	withSourcesJar()
+}
+
 tasks {
 	remapJar {
-		// destinationDirectory = getProjectDir().
-		setArchiveClassifier("core")
+		archiveClassifier = "" // No classifier for consistent naming
+		destinationDirectory = layout.buildDirectory.dir("devlibs")
+
+		doFirst {
+			println "Building remapJar for :core"
+		}
 	}
 }
+build.dependsOn remapJar
 
-task copyJar(type: Copy) {
-	from remapJar
-	into '../dist'
-}
-build.dependsOn copyJar
-
-// // configure the maven publication
-// publishing {
-// 	publications {
-// 		mavenJava(MavenPublication) {
-// 			artifactId = 'advancedchatcore'  // Set artifact ID in lowercase
-// 			// add all the jars that should be included when publishing to maven
-// 			artifact(remapJar) {
-// 				builtBy remapJar
-// 			}
-// 			artifact(sourcesJar) {
-// 				builtBy remapSourcesJar
-// 			}
-// 		}
-// 	}
 //
-// 	// select the repositories you want to publish to
-// 	repositories {
-// 		maven {
-// 			name = "GitHubPackages"
-// 			url = uri("https://maven.pkg.github.com/Arematics/AdvancedChatCore")
-// 			credentials {
-// 				username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-// 				password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
-// 			}
-// 		}
-// 	}
+// task copyJar(type: Copy) {
+// 	from remapJar
+// 	into '../dist'
 // }
+// build.dependsOn copyJar
