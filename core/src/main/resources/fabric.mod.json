@@ -21,9 +21,9 @@
   },
   "mixins": ["advancedchatcore.mixins.json"],
   "depends": {
-    "fabricloader": ">=0.15.11",
+    "fabricloader": ">=${loader_version}",
     "fabric": "*",
-    "minecraft": ">=1.21",
-    "malilib": ">=0.20.0"
+    "minecraft": ">=${minecraft_version}",
+    "malilib": ">=${malilib_version}"
   }
 }

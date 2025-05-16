@@ -28,7 +28,6 @@ dependencies {
 	include 'com.electronwill.night-config:toml:3.6.5'
 	include 'com.electronwill.night-config:core:3.6.5'
 
-
 	include "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
 	include "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"
 
@@ -43,8 +42,6 @@ dependencies {
 
 }
 
-
-
 tasks.register('downloadExtra') {
 	def f = new File(project.projectDir.toString() + '/src/main/resources/swear_words.csv')
 	if (!f.exists()) {
@@ -53,14 +50,6 @@ tasks.register('downloadExtra') {
 }
 
 tasks {
-	processResources {
-		inputs.property "version", project.version
-
-		filesMatching("fabric.mod.json") {
-			expand "version": project.version
-		}
-	}
-
 	jar {
 		// copy license into jar
 		from("../LICENSE") {

@@ -18,7 +18,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 	modImplementation "fi.dy.masa.malilib:malilib-fabric-1.21:${project.malilib_version}"
 
-	modImplementation(project(path: ":core", configuration: "namedElements")) { transitive false }
+	implementation(project(path: ":core", configuration: "namedElements")) { transitive false }
+	// modImplementation(project(path: ":core", configuration: "namedElements")) { transitive false }
 	// modImplementation project(':core')
 	// modImplementation "com.arematics:advancedchatcore:${project.advancedchat_version}"
 
@@ -49,14 +50,6 @@ dependencies {
 }
 
 tasks {
-	processResources {
-		inputs.property "version", project.version
-
-		filesMatching("fabric.mod.json") {
-			expand "version": project.version
-		}
-	}
-
 	jar {
 		// copy license into jar
 		from("../LICENSE") {

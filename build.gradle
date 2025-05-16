@@ -47,17 +47,44 @@ allprojects {
         it.options.encoding = "UTF-8"
     }
 
-    // tasks.register('copyJar', Copy) {
-    //     dependsOn build
-    //     from layout.buildDirectory.dir("libs")
-    //     into layout.projectDirectory.dir("dist")  // Change "output" to your desired directory
+    processResources {
+        inputs.property "version", project.mod_version
+        inputs.property "loader_version", project.loader_version
+        inputs.property "fabric_version", project.fabric_api_version
+        inputs.property "minecraft_version", project.minecraft_version
+        inputs.property "malilib_version", project.malilib_version
+
+        filesMatching("fabric.mod.json") {
+            filter { line ->
+                line.replaceAll('\\$\\{version\\}', project.version.toString())
+                        .replaceAll('\\$\\{loader_version\\}', project.loader_version.toString())
+                        .replaceAll('\\$\\{fabric_version\\}', project.fabric_version.toString())
+                        .replaceAll('\\$\\{minecraft_version\\}', project.minecraft_version.toString())
+                        .replaceAll('\\$\\{malilib_version\\}', project.malilib_version.toString())
+                        // for modules that depends on the core mod
+                        .replaceAll('\\$\\{core_mod_version\\}', project.version.toString())
+            }
+        }
+    }
+
+    // tasks.register('copyArchivesToDist', Copy) {
+    //     dependsOn tasks.withType(AbstractArchiveTask)
     //
-    //     doLast {
-    //         println layout.projectDirectory.dir("dist")
+    //     duplicatesStrategy = DuplicatesStrategy.EXCLUDE  // or INCLUDE
+    //
+    //     from {
+    //         tasks.withType(AbstractArchiveTask).collect { it.archiveFile.get().asFile }
     //     }
+    //
+    //     into rootProject.layout.projectDirectory.dir("dist")
+    // }
+
+    // tasks.named('build') {
+    //     finalizedBy tasks.named('copyArchivesToDist')
     // }
 
     tasks.withType(AbstractArchiveTask).configureEach {
         destinationDirectory.set(rootProject.layout.projectDirectory.dir("dist"))
+        // finalizedBy tasks.named('copyArchivesToDist')
     }
 }
