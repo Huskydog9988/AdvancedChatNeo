@@ -26,7 +26,7 @@ allprojects {
         maven { url 'https://maven.wispforest.io' }
     }
 
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
         options.release = 21
     }
@@ -45,5 +45,19 @@ allprojects {
     tasks.withType(JavaCompile).configureEach {
         it.options.release = 21
         it.options.encoding = "UTF-8"
+    }
+
+    // tasks.register('copyJar', Copy) {
+    //     dependsOn build
+    //     from layout.buildDirectory.dir("libs")
+    //     into layout.projectDirectory.dir("dist")  // Change "output" to your desired directory
+    //
+    //     doLast {
+    //         println layout.projectDirectory.dir("dist")
+    //     }
+    // }
+
+    tasks.withType(AbstractArchiveTask).configureEach {
+        destinationDirectory.set(rootProject.layout.projectDirectory.dir("dist"))
     }
 }

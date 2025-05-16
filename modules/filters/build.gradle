@@ -74,11 +74,9 @@ tasks {
 	}
 }
 
-task copyJar(type: Copy) {
-	from remapJar
-	into '../../dist'
+tasks.named('build') {
+	finalizedBy tasks.named('copyJar')
 }
-build.dependsOn copyJar
 
 // // configure the maven publication
 // publishing {

@@ -3,11 +3,13 @@ plugins {
 	id "io.freefair.lombok" version "8.10"
 }
 
+version = "${project.minecraft_version}-${project.mod_version}"
+group = project.maven_group
+def finalFileName = "${project.archives_base_name}-Core-${project.minecraft_version}-${project.mod_version}.jar"
+
 base {
 	archivesName = project.archives_base_name
 }
-version = "${project.minecraft_version}-${project.mod_version}"
-group = project.maven_group
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -41,17 +43,7 @@ dependencies {
 
 }
 
-processResources {
-	inputs.property "version", project.version
 
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
-}
-
-jar {
-	from "LICENSE.txt"
-}
 
 tasks.register('downloadExtra') {
 	def f = new File(project.projectDir.toString() + '/src/main/resources/swear_words.csv')
@@ -59,27 +51,36 @@ tasks.register('downloadExtra') {
 		new URL('https://raw.githubusercontent.com/surge-ai/profanity/main/profanity_en.csv').withInputStream{ i -> f.withOutputStream{ it << i }}
 	}
 }
-build.dependsOn "downloadExtra"
-
-java {
-	withSourcesJar()
-}
 
 tasks {
+	processResources {
+		inputs.property "version", project.version
+
+		filesMatching("fabric.mod.json") {
+			expand "version": project.version
+		}
+	}
+
+	jar {
+		// copy license into jar
+		from("../LICENSE") {
+			rename { "${it}" }
+		}
+		// archiveBaseName.set(rootProjectName + "-core")
+		// destinationDirectory = layout.buildDirectory.dir("devlibs")
+	}
+
 	remapJar {
-		archiveClassifier = "" // No classifier for consistent naming
-		destinationDirectory = layout.buildDirectory.dir("devlibs")
+		setArchiveFileName(finalFileName)
+		// setDestinationDirectory(layout.buildDirectory.dir("devlibs"))
 
 		doFirst {
 			println "Building remapJar for :core"
 		}
 	}
 }
-build.dependsOn remapJar
 
-//
-// task copyJar(type: Copy) {
-// 	from remapJar
-// 	into '../dist'
-// }
-// build.dependsOn copyJar
+tasks.named("build") {
+	dependsOn tasks.named("downloadExtra")
+	dependsOn tasks.named("remapJar")
+}

@@ -3,11 +3,13 @@ plugins {
 	id "io.freefair.lombok" version "8.10"
 }
 
+version = "${project.minecraft_version}-${project.mod_version}"
+group = project.maven_group
+def finalFileName = "${project.archives_base_name}-Box-${project.minecraft_version}-${project.mod_version}.jar"
+
 base {
 	archivesName = project.archives_base_name
 }
-version = "${project.minecraft_version}-${project.mod_version}"
-group = project.maven_group
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -16,8 +18,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 	modImplementation "fi.dy.masa.malilib:malilib-fabric-1.21:${project.malilib_version}"
 
-	modImplementation project(':core')
-	// modImplementation(project(path: ":core", configuration: "namedElements")) { transitive false }
+	modImplementation(project(path: ":core", configuration: "namedElements")) { transitive false }
+	// modImplementation project(':core')
 	// modImplementation "com.arematics:advancedchatcore:${project.advancedchat_version}"
 
 	implementation "org.mariuszgromada.math:MathParser.org-mXparser:${project.mxparser_version}"
@@ -46,41 +48,35 @@ dependencies {
 	include group: 'com.carrotsearch', name: 'hppc', version: '0.9.0'
 }
 
-processResources {
-	inputs.property "version", project.version
-
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
-}
-
-tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
-	it.options.release = 21
-}
-
-jar {
-	from "LICENSE.txt"
-}
-
-java {
-	withSourcesJar()
-}
-
 tasks {
+	processResources {
+		inputs.property "version", project.version
+
+		filesMatching("fabric.mod.json") {
+			expand "version": project.version
+		}
+	}
+
+	jar {
+		// copy license into jar
+		from("../LICENSE") {
+			rename { "${it}" }
+		}
+		// archiveBaseName.set(rootProjectName + "-box")
+		// destinationDirectory = layout.buildDirectory.dir("devlibs")
+	}
+
 	remapJar {
-		archiveClassifier = "" // Ensures no extra classifier
-		destinationDirectory = layout.buildDirectory.dir("devlibs")
+		setArchiveFileName(finalFileName)
+		// setArchiveClassifier("Box")
+		// setDestinationDirectory(layout.buildDirectory.dir("devlibs"))
 
 		doFirst {
 			println "Building remapJar for :core"
 		}
 	}
 }
-build.dependsOn remapJar
 
-// task copyJar(type: Copy) {
-// 	from remapJar
-// 	into '../../dist'
-// }
-// build.dependsOn copyJar
+tasks.named("build") {
+	dependsOn tasks.named("remapJar")
+}
