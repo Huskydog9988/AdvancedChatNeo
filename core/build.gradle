@@ -52,7 +52,7 @@ tasks.register('downloadExtra') {
 tasks {
 	jar {
 		// copy license into jar
-		from("../LICENSE") {
+		from("../LICENSE.txt") {
 			rename { "${it}" }
 		}
 		// archiveBaseName.set(rootProjectName + "-core")
