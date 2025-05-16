@@ -1,81 +1,59 @@
 plugins {
-	id 'fabric-loom' version '1.7.2'
-	id "io.freefair.lombok" version "8.10"
+	alias(libs.plugins.fabric.loom)
+	alias(libs.plugins.lombok)
 }
+
+version = "${project.minecraft_version}-${project.mod_version}"
+group = project.maven_group
+def finalFileName = "${project.archives_base_name}-Filter-${project.minecraft_version}-${project.mod_version}.jar"
 
 base {
 	archivesName = project.archives_base_name
 }
-version = "${project.minecraft_version}-${project.mod_version}"
-group = project.maven_group
-
-repositories {
-	mavenCentral()
-	mavenLocal() // only used to build the mod locally
-	maven { url 'https://masa.dy.fi/maven' }
-	maven { url 'https://jitpack.io' }
-
-	maven {
-		url = uri("https://maven.pkg.github.com/Arematics/AdvancedChatCore")
-		credentials {
-			username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-			password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
-		}
-	}
-}
 
 dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-	modImplementation "fi.dy.masa.malilib:malilib-fabric-1.21:${project.malilib_version}"
+	minecraft(libs.minecraft)
+	mappings(variantOf(libs.yarn.mappings) {
+		classifier("v2")
+	})
+	modImplementation(libs.fabric.loader)
+	modImplementation(libs.fabric.api)
+	modImplementation(libs.malilib)
 
-	modImplementation(project(path: ":core", configuration: "namedElements")) { transitive false }
-	// modImplementation "com.arematics:advancedchatcore:${project.advancedchat_version}"
+	implementation(project(path: ":core", configuration: "namedElements")) { transitive false }
 
-	implementation "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
-	implementation "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"
+	implementation(libs.konstruct.addons)
+	implementation(libs.konstruct.core)
+	include(libs.konstruct.addons)
+	include(libs.konstruct.core)
 
-	implementation 'org.openjdk.nashorn:nashorn-core:15.3'
-	implementation 'org.javadelight:delight-nashorn-sandbox:0.2.5'
+	implementation(libs.nashorn.core)
+	implementation(libs.delight.nashorn.sandbox)
 
-	include 'org.openjdk.nashorn:nashorn-core:15.3'
-	include 'org.javadelight:delight-nashorn-sandbox:0.2.5'
-	include "com.github.DarkKronicle.Konstruct:addons:${project.konstruct_version}"
-	include "com.github.DarkKronicle.Konstruct:core:${project.konstruct_version}"
-
-}
-
-processResources {
-	inputs.property "version", project.version
-
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
-}
-
-tasks.withType(JavaCompile).configureEach {
-	it.options.encoding = "UTF-8"
-	it.options.release = 21
-}
-
-java {
-	withSourcesJar()
-}
-
-jar {
-	from "LICENSE.txt"
+	include(libs.nashorn.core)
+	include(libs.delight.nashorn.sandbox)
 }
 
 tasks {
+	jar {
+		// copy license into jar
+		from("../LICENSE") {
+			rename { "${it}" }
+		}
+		// archiveBaseName.set(rootProjectName + "-box")
+		// destinationDirectory = layout.buildDirectory.dir("devlibs")
+	}
+
 	remapJar {
-		// destinationDirectory = getProjectDir().
+		setArchiveFileName(finalFileName)
+		// setDestinationDirectory(layout.buildDirectory.dir("devlibs"))
 	}
 }
 
 tasks.named('build') {
-	finalizedBy tasks.named('copyJar')
+	dependsOn tasks.named("remapJar")
+
+	// finalizedBy tasks.named('copyJar')
 }
 
 // // configure the maven publication

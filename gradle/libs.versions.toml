@@ -74,3 +74,7 @@ opennlp-tokenize-models = { group = "edu.washington.cs.knowitall", name = "openn
 
 hppc = { group = "com.carrotsearch", name = "hppc", version = "0.9.0" }
 
+nashorn-core = { group = "org.openjdk.nashorn", name = "nashorn-core", version = "15.3" }
+delight-nashorn-sandbox = { group = "org.javadelight", name = "delight-nashorn-sandbox", version = "0.2.5" }
+
+

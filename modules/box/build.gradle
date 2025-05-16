@@ -22,9 +22,6 @@ dependencies {
 	modImplementation(libs.malilib)
 
 	implementation(project(path: ":core", configuration: "namedElements")) { transitive false }
-	// modImplementation(project(path: ":core", configuration: "namedElements")) { transitive false }
-	// modImplementation project(':core')
-	// modImplementation "com.arematics:advancedchatcore:${project.advancedchat_version}"
 
 	implementation(libs.mxparser)
 	include(libs.mxparser)
@@ -65,10 +62,6 @@ tasks {
 		setArchiveFileName(finalFileName)
 		// setArchiveClassifier("Box")
 		// setDestinationDirectory(layout.buildDirectory.dir("devlibs"))
-
-		doFirst {
-			println "Building remapJar for :core"
-		}
 	}
 }
 
