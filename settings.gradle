@@ -13,7 +13,7 @@ pluginManagement {
 rootProject.name = 'AdvancedChatNeo'
 // include(":modules:filters")
 include(":core")
-include(":box")
+include(":modules:box")
 
 // // Set the project directory for :box if it's not in the default location.
 // project(':box').projectDir = file('modules/box')
