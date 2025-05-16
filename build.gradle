@@ -5,7 +5,7 @@ buildscript {
 }
 
 plugins {
-    id 'fabric-loom' version '1.7.2'
+    alias(libs.plugins.fabric.loom)
 }
 
 version = project.mod_version
@@ -13,8 +13,11 @@ group = project.maven_group
 
 dependencies {
     // required for plugins{fabric-loom}
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    // mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    minecraft(libs.minecraft)
+    mappings(variantOf(libs.yarn.mappings) {
+        classifier("v2")
+    })
 }
 
 allprojects {
@@ -49,10 +52,10 @@ allprojects {
 
     processResources {
         inputs.property "version", project.mod_version
-        inputs.property "loader_version", project.loader_version
-        inputs.property "fabric_version", project.fabric_api_version
-        inputs.property "minecraft_version", project.minecraft_version
-        inputs.property "malilib_version", project.malilib_version
+        inputs.property "loader_version", libs.versions.fabric.loader
+        inputs.property "fabric_version", libs.versions.fabric.api
+        inputs.property "minecraft_version", libs.versions.minecraft
+        inputs.property "malilib_version", libs.versions.malilib
 
         filesMatching("fabric.mod.json") {
             filter { line ->

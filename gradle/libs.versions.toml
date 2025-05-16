@@ -1,0 +1,76 @@
+[versions]
+#mod-version = "1.6.0"
+
+minecraft = "1.21.1"
+yarn-mappings = "1.21.1+build.3"
+fabric-loader = "0.16.9"
+fabric-api = "0.108.0+1.21.1"
+
+malilib = "0.20.0"
+konstruct = "2.0.3-build1"
+mxparser = "4.4.2"
+owo = "0.12.14+1.21"
+modmenu = "11.0.3"
+night-config = "3.6.5"
+
+languagetool = "5.5"
+morfologik = "2.1.7"
+knowitall-opennlp = "1.5"
+
+[plugins]
+fabric-loom = { id = "fabric-loom", version = "1.7.2" }
+lombok = { id = "io.freefair.lombok", version = "8.10" }
+
+[libraries]
+minecraft = { group = "com.mojang", name = "minecraft", version.ref = "minecraft" }
+
+yarn-mappings = { group = "net.fabricmc", name = "yarn", version.ref = "yarn-mappings" }
+fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = "fabric-loader" }
+fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version.ref = "fabric-api" }
+
+malilib = { group = "fi.dy.masa.malilib", name = "malilib-fabric-1.21", version.ref = "malilib" }
+
+modmenu = { group = "com.terraformersmc", name = "modmenu", version.ref = "modmenu" }
+
+konstruct-addons = { group = "com.github.DarkKronicle.Konstruct", name = "addons", version.ref = "konstruct" }
+konstruct-core = { group = "com.github.DarkKronicle.Konstruct", name = "core", version.ref = "konstruct" }
+
+night-config-toml = { group = "com.electronwill.night-config", name = "toml", version.ref = "night-config" }
+night-config-core = { group = "com.electronwill.night-config", name = "core", version.ref = "night-config" }
+
+mxparser = { group = "org.mariuszgromada.math", name = "MathParser.org-mXparser", version.ref = "mxparser" }
+
+owo-lib = { group = "io.wispforest", name = "owo-lib", version.ref = "owo" }
+owo-sentinel = { group = "io.wispforest", name = "owo-sentinel", version.ref = "owo" }
+
+apache-commons-csv = { group = "org.apache.commons", name = "commons-csv", version = "1.8" }
+apache-opennlp-tools = { group = "org.apache.opennlp", name = "opennlp-tools", version = "1.9.3" }
+
+# TODO: update ASAP
+languagetool-en = { group = "org.languagetool", name = "language-en", version.ref = "languagetool" }
+languagetool-core = { group = "org.languagetool", name = "languagetool-core", version.ref = "languagetool" }
+
+loomchild-segment = { group = "net.loomchild", name = "segment", version = "2.0.3" }
+
+jaxb-api = { group = "javax.xml.bind", name = "jaxb-api", version = "2.3.1" }
+
+trove4j = { group = "net.sf.trove4j", name = "trove4j", version = "3.0.3" }
+jetbrains-trove4j = { group = "org.jetbrains.intellij.deps", name = "trove4j", version = "1.0.20200330" }
+
+unit-api = { group = "javax.measure", name = "unit-api", version = "2.1.3" }
+
+indriya = { group = "tech.units", name = "indriya", version = "1.3" }
+
+uom-lib = { group = "tech.uom.lib", name = "uom-lib-common", version = "1.1" }
+
+morfologik-fsa = { group = "org.carrot2", name = "morfologik-fsa", version.ref = "morfologik" }
+morfologik-fsa-builders = { group = "org.carrot2", name = "morfologik-fsa-builders", version.ref = "morfologik" }
+morfologik-speller = { group = "org.carrot2", name = "morfologik-speller", version.ref = "morfologik" }
+morfologik-stemming = { group = "org.carrot2", name = "morfologik-stemming", version.ref = "morfologik" }
+
+opennlp-chunk-models = { group = "edu.washington.cs.knowitall", name = "opennlp-chunk-models", version.ref = "knowitall-opennlp" }
+opennlp-postag-models = { group = "edu.washington.cs.knowitall", name = "opennlp-postag-models", version.ref = "knowitall-opennlp" }
+opennlp-tokenize-models = { group = "edu.washington.cs.knowitall", name = "opennlp-tokenize-models", version.ref = "knowitall-opennlp" }
+
+hppc = { group = "com.carrotsearch", name = "hppc", version = "0.9.0" }
+
