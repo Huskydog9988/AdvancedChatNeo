@@ -8,7 +8,6 @@ buildscript {
 
 plugins {
     alias(libs.plugins.fabric.loom)
-    id("java-library")
 }
 
 val maven_group: String by project
@@ -27,12 +26,27 @@ dependencies {
 }
 
 allprojects {
+    apply(plugin = "java-library")
+//    apply(plugin = "java")
+
     repositories {
         mavenCentral()
         maven("https://masa.dy.fi/maven")
         maven("https://maven.terraformersmc.com/releases/")
         maven("https://jitpack.io")
         maven("https://maven.wispforest.io")
+    }
+
+    configure<JavaPluginExtension> {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    tasks.withType<Javadoc> {
+        enabled = false
     }
 
     tasks.withType<JavaCompile>().configureEach {
@@ -45,12 +59,6 @@ allprojects {
 
     tasks.withType<ProcessResources>().configureEach {
         filteringCharset = "UTF-8"
-
-        // inputs.property "version", project.mod_version
-        // inputs.property "loader_version", libs.versions.fabric.loader
-        // inputs.property "fabric_version", libs.versions.fabric.api
-        // inputs.property "minecraft_version", libs.versions.minecraft
-        // inputs.property "malilib_version", libs.versions.malilib
 
         filesMatching("fabric.mod.json") {
             filter {
@@ -69,24 +77,4 @@ allprojects {
             println("Done processing");
         }
     }
-
-//    tasks.register<Copy>("copyArchivesToDist") {
-//        dependsOn(tasks.withType<AbstractArchiveTask>())
-//
-//        duplicatesStrategy = DuplicatesStrategy.EXCLUDE // or INCLUDE
-//
-//        from(tasks.withType<AbstractArchiveTask>().map { it.archiveFile.get().asFile })
-//
-//        into(rootProject.layout.projectDirectory.dir("dist"))
-//    }
-
-//     tasks.named("build").configure {
-//         finalizedBy(tasks.named("copyArchivesToDist"))
-//     }
-//
-////    tasks.withType<AbstractArchiveTask>().configureEach {
-//////        TODO: think this is the cause
-//////        destinationDirectory.set(rootProject.layout.projectDirectory.dir("dist"))
-////        // finalizedBy tasks.named("copyArchivesToDist")
-////    }
 }

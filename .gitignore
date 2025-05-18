@@ -2,8 +2,6 @@ script.sh
 
 # gradle dirs
 .gradle/
-gradle/
-!gradle/libs.versions.toml
 
 # ide stuff
 .idea/
