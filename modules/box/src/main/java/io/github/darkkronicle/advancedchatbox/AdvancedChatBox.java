@@ -14,7 +14,7 @@ import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
 public class AdvancedChatBox implements ClientModInitializer {
-    public static final String MOD_ID = "advancedchatbox";
+    public static final String MOD_ID = "advchatneobox";
 
     @Override
     public void onInitializeClient() {

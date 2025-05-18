@@ -28,7 +28,7 @@ import java.util.Date;
 @Environment(EnvType.CLIENT)
 public class AdvancedChatLog implements ClientModInitializer {
 
-    public static final String MOD_ID = "advancedchatlog";
+    public static final String MOD_ID = "advchatneolog";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     // Use java's built in since this is *simple*
     private static org.slf4j.Logger CHAT_LOGGER;

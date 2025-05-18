@@ -1,13 +1,12 @@
 plugins {
 	alias(libs.plugins.fabric.loom)
 	alias(libs.plugins.lombok)
-	// id "com.diffplug.spotless" version "5.17.1"
 }
 
 def modVersion = "${libs.versions.minecraft.get()}-${libs.versions.mod.version.get()}"
 version = modVersion
 group = project.maven_group
-def finalFileName = "${project.archives_base_name}-Log-${modVersion}.jar"
+def finalFileName = "${project.archives_base_name}-Devmod-${modVersion}.jar"
 
 base {
 	archivesName = project.archives_base_name
@@ -20,11 +19,15 @@ dependencies {
 	})
 	modImplementation(libs.fabric.loader)
 	modImplementation(libs.fabric.api)
-	modImplementation(libs.malilib)
 
-	implementation(project(path: ":core", configuration: "namedElements")) { transitive false }
+	// // need for dependencies
+	// modImplementation(libs.malilib)
 
-	implementation(libs.lombok)
+	modImplementation(project(path: ":core"))
+	modImplementation(project(path: ":modules:box"))
+	modImplementation(project(path: ":modules:filters"))
+	modImplementation(project(path: ":modules:hud"))
+	modImplementation(project(path: ":modules:log"))
 }
 
 tasks {
@@ -39,23 +42,16 @@ tasks {
 
 	remapJar {
 		setArchiveFileName(finalFileName)
+		// setArchiveClassifier("Box")
 		// setDestinationDirectory(layout.buildDirectory.dir("devlibs"))
 	}
 }
 
-// spotless {
-// 	ratchetFrom 'origin/main'
-// 	format 'misc', {
-// 		// define the files to apply `misc` to
-// 		target '*.gradle', '*.md', '.gitignore'
-//
-// 		// define the steps to apply to those files
-// 		trimTrailingWhitespace()
-// 		indentWithTabs() // or spaces. Takes an integer argument if you don't like 4
-// 		endWithNewline()
-// 	}
-// 	java {
-// 		target 'src/*/java/**/*.java'
-// 		licenseHeaderFile "HEADER.txt"
-// 	}
-// }
+tasks.named("classes").configure {
+	// ensure client used processed mod
+	dependsOn tasks.withType(ProcessResources)
+}
+
+tasks.named("build") {
+	dependsOn tasks.named("remapJar")
+}

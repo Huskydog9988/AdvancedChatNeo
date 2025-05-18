@@ -1,28 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "advchatneolog",
+  "id": "advchatneodevmod",
   "version": "${version}",
-  "name": "AdvChatNeo Log",
-  "description": "An easy way to view and filter through many chat messages.",
-  "authors": ["DarkKronicle", "EnricoMessall", "Huskydog9988"],
+  "name": "AdvChatNeo DevMod",
+  "description": "A mod to used in development",
+  "authors": ["Huskydog9988"],
   "contact": {
     "homepage": "${github}",
     "sources": "${github}",
     "issues": "${github}/issues"
   },
   "license": "MPL-v2",
-  "icon": "assets/advancedchatlog/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": ["io.github.darkkronicle.advancedchatlog.AdvancedChatLog"]
+    "client": ["xyz.huskydog.advchatneo.DevMod"]
   },
-  "mixins": ["advancedchatlog.mixins.json"],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": ">=${minecraft_version}",
-    "malilib": ">=${malilib_version}",
-    "advchatneocore": ">=${core_mod_version}"
+    "advchatneocore": "*",
+    "advchatneobox": "*",
+    "advchatneofilters": "*",
+    "advchatneohud": "*",
+    "advchatneolog": "*"
   },
   "custom": {
     "acmodule": true,

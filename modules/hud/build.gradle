@@ -3,15 +3,10 @@ plugins {
 	alias(libs.plugins.lombok)
 }
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
-
-version = "${project.minecraft_version}-${project.mod_version}"
+def modVersion = "${libs.versions.minecraft.get()}-${libs.versions.mod.version.get()}"
+version = modVersion
 group = project.maven_group
-def finalFileName = "${project.archives_base_name}-Hud-${project.minecraft_version}-${project.mod_version}.jar"
+def finalFileName = "${project.archives_base_name}-Hud-${modVersion}.jar"
 
 base {
 	archivesName = project.archives_base_name

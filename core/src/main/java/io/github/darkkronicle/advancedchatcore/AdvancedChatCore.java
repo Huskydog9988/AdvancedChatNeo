@@ -33,7 +33,7 @@ import org.apache.logging.log4j.Logger;
 @Environment(EnvType.CLIENT)
 public class AdvancedChatCore implements ClientModInitializer {
 
-    public static final String MOD_ID = "advancedchatcore";
+    public static final String MOD_ID = "advchatneocore";
 
     /**
      * Whether or not messages should be sent to the HUD. Used for other modules overwriting HUD.

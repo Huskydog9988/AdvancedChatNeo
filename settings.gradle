@@ -4,8 +4,8 @@ pluginManagement {
 			name = 'Fabric'
 			url = 'https://maven.fabricmc.net/'
 		}
-		gradlePluginPortal()
 		mavenCentral()
+		gradlePluginPortal()
 	}
 }
 
@@ -16,6 +16,7 @@ include(":modules:box")
 include(":modules:filters")
 include(":modules:hud")
 include(":modules:log")
+// include(":modules:devmod")
 
 // // Set the project directory for :box if it's not in the default location.
 // project(':box').projectDir = file('modules/box')

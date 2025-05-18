@@ -18,9 +18,9 @@ import org.apache.logging.log4j.Logger;
 @Environment(EnvType.CLIENT)
 public class AdvancedChatHud implements ClientModInitializer {
 
-    public static final String MOD_ID = "advancedchathud";
+    public static final String MOD_ID = "advchatneohud";
     public static MainChatTab MAIN_CHAT_TAB;
-    public static Logger LOGGER = LogManager.getLogger("AdvancedChatHUD");
+    public static Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     @Override
     public void onInitializeClient() {
