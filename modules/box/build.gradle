@@ -22,7 +22,7 @@ dependencies {
 
 	modImplementation(libs.malilib)
 
-	implementation(project(path: ":core", configuration: "namedElements")) { transitive false }
+	modImplementation(project(path: ":core"))
 
 	implementation(libs.mxparser)
 	include(libs.mxparser)

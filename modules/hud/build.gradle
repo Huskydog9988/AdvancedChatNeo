@@ -22,7 +22,7 @@ dependencies {
 
 	modImplementation(libs.malilib)
 
-	implementation(project(path: ":core", configuration: "namedElements")) { transitive false }
+	modImplementation(project(path: ":core"))
 
 	modImplementation(libs.konstruct.addons)
 	modImplementation(libs.konstruct.core)
@@ -66,3 +66,12 @@ tasks.register("copyToDist", Copy) {
 	// into layout.buildDirectory.dir("dist")
 	into rootProject.layout.projectDirectory.dir("dist")
 }
+
+// // workaround to genSources not working
+// afterEvaluate {
+// 	tasks.named('genSourcesWithVineflower') {
+// 		dependsOn(':modules:log:genSourcesWithVineflower')
+// 		dependsOn(':modules:box:genSourcesWithVineflower')
+// 		dependsOn(':modules:filters:genSourcesWithVineflower')
+// 	}
+// }
