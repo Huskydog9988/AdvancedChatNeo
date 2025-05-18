@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "advchatneodevmod",
+  "id": "advchatneodev-mod",
   "version": "${version}",
   "name": "AdvChatNeo DevMod",
   "description": "A mod to used in development",
@@ -19,17 +19,17 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": ">=${minecraft_version}",
-    "advchatneocore": "*",
-    "advchatneobox": "*",
-    "advchatneofilters": "*",
-    "advchatneohud": "*",
-    "advchatneolog": "*"
+    "advchatneo-core": "*",
+    "advchatneo-box": "*",
+    "advchatneo-filters": "*",
+    "advchatneo-hud": "*",
+    "advchatneo-log": "*"
   },
   "custom": {
     "acmodule": true,
     "modmenu": {
       "parent": {
-        "id": "advchatneocore"
+        "id": "advchatneo-core"
       }
     }
   }

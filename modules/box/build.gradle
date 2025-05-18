@@ -68,4 +68,14 @@ tasks {
 
 tasks.named("build") {
 	dependsOn tasks.named("remapJar")
+
+	finalizedBy("copyToDist")
+}
+
+tasks.register("copyToDist", Copy) {
+	dependsOn tasks.build
+
+	from layout.buildDirectory.dir("libs")
+	// into layout.buildDirectory.dir("dist")
+	into rootProject.layout.projectDirectory.dir("dist")
 }

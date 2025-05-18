@@ -53,21 +53,16 @@ tasks {
 	}
 }
 
-// // configure the maven publication
-// publishing {
-// 	publications {
-// 		mavenJava(MavenPublication) {
-// 			// add all the jars that should be included when publishing to maven
-// 			artifact(remapJar) {
-// 				builtBy remapJar
-// 			}
-// 			artifact(sourcesJar) {
-// 				builtBy remapSourcesJar
-// 			}
-// 		}
-// 	}
-//
-// 	// select the repositories you want to publish to
-// 	repositories {
-// 	}
-// }
+tasks.named("build") {
+	dependsOn tasks.named("remapJar")
+
+	finalizedBy("copyToDist")
+}
+
+tasks.register("copyToDist", Copy) {
+	dependsOn tasks.build
+
+	from layout.buildDirectory.dir("libs")
+	// into layout.buildDirectory.dir("dist")
+	into rootProject.layout.projectDirectory.dir("dist")
+}

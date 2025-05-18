@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "advchatneohud",
+  "id": "advchatneo-hud",
   "version": "${version}",
   "name": "AdvChatNeo HUD",
   "description": "A chat HUD overhaul with chat tabs",
@@ -22,13 +22,13 @@
     "fabric": "*",
     "minecraft": ">=${minecraft_version}",
     "malilib": ">=${malilib_version}",
-    "advchatneocore": ">=${core_mod_version}"
+    "advchatneo-core": ">=${core_mod_version}"
   },
   "custom": {
     "acmodule": true,
     "modmenu": {
       "parent": {
-        "id": "advchatneocore"
+        "id": "advchatneo-core"
       }
     }
   }

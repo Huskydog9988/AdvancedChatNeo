@@ -47,10 +47,10 @@ tasks {
 	}
 }
 
-tasks.named("classes").configure {
-	// ensure client used processed mod
-	dependsOn tasks.withType(ProcessResources)
-}
+// tasks.named("classes").configure {
+// 	// ensure client used processed mod
+// 	dependsOn tasks.withType(ProcessResources)
+// }
 
 tasks.named("build") {
 	dependsOn tasks.named("remapJar")

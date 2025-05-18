@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "advchatneobox",
+  "id": "advchatneo-box",
   "version": "${version}",
   "name": "AdvChatNeo Box",
   "description": "A mod to overhaul the Minecraft chat text box",
@@ -21,13 +21,13 @@
     "fabric": "*",
     "minecraft": ">=${minecraft_version}",
     "malilib": ">=${malilib_version}",
-    "advchatneocore": ">=${core_mod_version}"
+    "advchatneo-core": ">=${core_mod_version}"
   },
   "custom": {
     "acmodule": true,
     "modmenu": {
       "parent": {
-        "id": "advchatneocore"
+        "id": "advchatneo-core"
       }
     }
   }

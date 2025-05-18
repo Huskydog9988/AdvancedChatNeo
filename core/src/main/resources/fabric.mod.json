@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "advchatneocore",
+  "id": "advchatneo-core",
   "version": "${version}",
   "name": "AdvChatNeo Core",
   "description": "The core of all AdvChatNeo features",

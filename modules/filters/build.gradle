@@ -51,28 +51,16 @@ tasks {
 	}
 }
 
-tasks.named('build') {
+tasks.named("build") {
 	dependsOn tasks.named("remapJar")
 
-	// finalizedBy tasks.named('copyJar')
+	finalizedBy("copyToDist")
 }
 
-// // configure the maven publication
-// publishing {
-// 	publications {
-// 		mavenJava(MavenPublication) {
-// 			// add all the jars that should be included when publishing to maven
-// 			artifact(remapJar) {
-// 				builtBy remapJar
-// 			}
-// 			artifact(sourcesJar) {
-// 				builtBy remapSourcesJar
-// 			}
-// 		}
-// 	}
-//
-// 	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-// 	repositories {
-//
-// 	}
-// }
+tasks.register("copyToDist", Copy) {
+	dependsOn tasks.build
+
+	from layout.buildDirectory.dir("libs")
+	// into layout.buildDirectory.dir("dist")
+	into rootProject.layout.projectDirectory.dir("dist")
+}
